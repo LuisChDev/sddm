@@ -358,9 +358,8 @@ namespace SDDM {
         // last session later, in slotAuthenticationFinished()
         m_sessionName = session.fileName();
 
-        if (session.type() == Session::WaylandSession && m_displayServerType == X11DisplayServerType) {
-            // If it's an X11 display server, we'll have an (idling) Xorg process where
-            // m_terminalId is right now, we need to find another VT
+        if ((session.type() == Session::WaylandSession && m_displayServerType == X11DisplayServerType) || m_greeter->isRunning()) {
+            // Create a new VT when we need to have another compositor running
             m_terminalId = VirtualTerminal::setUpNewVt();
         }
 
@@ -397,8 +396,6 @@ namespace SDDM {
             m_auth->setSession(session.exec());
         }
         m_auth->insertEnvironment(env);
-
-        m_greeter->stop();
         m_auth->start();
     }
 
