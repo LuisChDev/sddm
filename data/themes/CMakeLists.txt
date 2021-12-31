@@ -1,4 +1,4 @@
-set(THEMES elarun maldives maya)
+set(THEMES WhiteSur elarun maldives maya)
 
 foreach(THEME ${THEMES})
     # We assume that theme-specific translations are stored
@@ -16,5 +16,12 @@ foreach(THEME ${THEMES})
 
     list(APPEND THEMES_QM_FILES ${QM_FILES})
 endforeach(THEME)
+
+install(FILES
+  "WhiteSur/background.png"
+  DESTINATION "${DATA_INSTALL_DIR}/themes/WhiteSur"
+  )
+
+install(DIRECTORY "WhiteSur/assets" DESTINATION "${DATA_INSTALL_DIR}/themes/WhiteSur")
 
 add_custom_target(themes-translation DEPENDS ${THEMES_QM_FILES})
